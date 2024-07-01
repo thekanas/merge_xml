@@ -9,3 +9,4 @@
 
 ![image](https://github.com/South12309/merge_xml/assets/26357330/57edeba8-ede1-43eb-af94-5752bf7c7004)
 
+pr check
