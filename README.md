@@ -13,6 +13,7 @@
 
 Для проверки работы приложения необходимо выполнить шаги:
 
+
 1. Скопировать абсолютный путь до директории с тестовыми фикстурами, например, */home/user/project/merge_xml/src/test/java/com/vpolosov/trainee/merge_xml/test_fixtures/Ok*
 2. В Postman отправить **POST** запрос на адрес **localhost:8080/xml**, в Body формат raw Text указать скопированный путь до тестовых фикстур
 3. При успешном ответе получим: Total.xml was created!
