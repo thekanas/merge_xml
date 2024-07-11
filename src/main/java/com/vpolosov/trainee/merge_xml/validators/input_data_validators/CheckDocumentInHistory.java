@@ -1,9 +1,13 @@
-package com.vpolosov.trainee.merge_xml.service;
+package com.vpolosov.trainee.merge_xml.validators.input_data_validators;
 
+import com.vpolosov.trainee.merge_xml.handler.exception.DuplicationProcessingException;
 import com.vpolosov.trainee.merge_xml.handler.exception.InvalidCurrencyCodeValueException;
 import com.vpolosov.trainee.merge_xml.model.History;
+import com.vpolosov.trainee.merge_xml.service.HistoryService;
 import com.vpolosov.trainee.merge_xml.service.specification.HistorySpecifications;
+import com.vpolosov.trainee.merge_xml.validators.InputDataValidation;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
