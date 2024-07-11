@@ -1,9 +1,7 @@
 package com.vpolosov.trainee.merge_xml.service.files;
 
 import com.vpolosov.trainee.merge_xml.aspect.Loggable;
-import com.vpolosov.trainee.merge_xml.handler.exception.IncorrectXmlFileException;
 import com.vpolosov.trainee.merge_xml.service.HistoryService;
-import com.vpolosov.trainee.merge_xml.validators.XmlValidator;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
@@ -40,17 +38,12 @@ public class MergeXmlFiles {
     @Loggable
     public File merge(List<File> sourceXml, File xsdFile, String target) throws IOException, ParserConfigurationException, SAXException, TransformerException {
         File targetFile = new File(sourceXml.get(0).getParentFile().getPath(), target);
-        XmlValidator xmlValidator = new XmlValidator();
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newDefaultInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
         Document targetDocument = documentBuilder.newDocument();
 
         for (File sourceFile : sourceXml) {
-            if (!xmlValidator.isValid(xsdFile, sourceFile)) {
-                loggerForUser.error("Файл {} не прошел проверку.", sourceFile.getName());
-                throw new IncorrectXmlFileException("Invalid XML file with name: " + sourceFile.getName());
-            }
 
             loggerForUser.info("Файл {} прошел проверку.", sourceFile.getName());
 
