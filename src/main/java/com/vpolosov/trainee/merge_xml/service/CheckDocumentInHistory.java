@@ -1,5 +1,6 @@
 package com.vpolosov.trainee.merge_xml.service;
 
+import com.vpolosov.trainee.merge_xml.handler.exception.InvalidCurrencyCodeValueException;
 import com.vpolosov.trainee.merge_xml.model.History;
 import com.vpolosov.trainee.merge_xml.service.specification.HistorySpecifications;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,8 @@ public class CheckDocumentInHistory {
     private final HistoryService historyService;
     private final Logger loggerForDouble;
     private static final String DOCREF_TAG = "DOCREF";
+    private static final String CURRCODE_TAG = "CURRCODE";
+    private static final String VALID_CURRCODE = "810";
 
     public Map<String, String> getLoadDateToBDFromHistory(List<File> xmlFiles) throws IOException, SAXException, ParserConfigurationException {
         DocumentBuilder documentBuilder = DocumentBuilderFactory.newDefaultInstance().newDocumentBuilder();
@@ -34,6 +37,13 @@ public class CheckDocumentInHistory {
         Specification<History> spec = Specification.where(null);
         for (File xmlFile : xmlFiles) {
             Document document = documentBuilder.parse(xmlFile);
+
+            NodeList nodeListWithCurrCode = document.getElementsByTagName(CURRCODE_TAG);
+            String currCode = nodeListWithCurrCode.item(0).getTextContent();
+            if (!currCode.equals(VALID_CURRCODE)) {
+                throw new InvalidCurrencyCodeValueException("Допустимое значение кода валюты " + VALID_CURRCODE);
+            }
+
             NodeList elementsByTagName = document.getElementsByTagName(DOCREF_TAG);
             String docRef = elementsByTagName.item(0).getTextContent();
             docRefsAndFileNames.put(docRef, xmlFile.getName());

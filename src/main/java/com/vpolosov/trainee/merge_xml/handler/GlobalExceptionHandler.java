@@ -16,7 +16,7 @@ import java.io.IOException;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({IncorrectXmlFileException.class, MoreFiveHundredKbException.class, NotExactlyOneXsdFileException.class,
-            NotExactlyTenFilesException.class, DuplicationProcessingException.class})
+            NotExactlyTenFilesException.class, DuplicationProcessingException.class, InvalidCurrencyCodeValueException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponseDTO handleIllegalArgumentException(Exception e) {
         return new ErrorResponseDTO("Bad Request", e.getMessage());
