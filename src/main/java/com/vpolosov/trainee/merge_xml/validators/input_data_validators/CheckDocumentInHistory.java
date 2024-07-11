@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class CheckDocumentInHistory {
+public class CheckDocumentInHistory implements InputDataValidation {
 
     private final HistoryService historyService;
     private final Logger loggerForDouble;
@@ -31,7 +31,20 @@ public class CheckDocumentInHistory {
     private static final String CURRCODE_TAG = "CURRCODE";
     private static final String VALID_CURRCODE = "810";
 
-    public Map<String, String> getLoadDateToBDFromHistory(List<File> xmlFiles) throws IOException, SAXException, ParserConfigurationException {
+    @SneakyThrows
+    public void verify(List<File> xmlFiles, List<File> xsdFiles) {
+        Map<String, String> docRefAndFileNameFromHistory = getLoadDateToBDFromHistory(xmlFiles);
+        if (!docRefAndFileNameFromHistory.isEmpty()) {
+            StringBuilder message = new StringBuilder();
+            for (Map.Entry<String, String> entry : docRefAndFileNameFromHistory.entrySet()) {
+                message.append("В файле ").append(entry.getValue()).append(" найден платеж, который уже был загружен ранее ")
+                        .append(entry.getKey()).append(";");
+            }
+            throw new DuplicationProcessingException(message.toString());
+        }
+    }
+
+    private Map<String, String> getLoadDateToBDFromHistory(List<File> xmlFiles) throws IOException, SAXException, ParserConfigurationException {
         DocumentBuilder documentBuilder = DocumentBuilderFactory.newDefaultInstance().newDocumentBuilder();
         Map<String, String> docRefsAndFileNames = new HashMap<>();
         Specification<History> spec = Specification.where(null);
