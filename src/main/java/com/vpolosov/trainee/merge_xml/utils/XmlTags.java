@@ -21,4 +21,9 @@ public class XmlTags {
      * Дата создания документа.
      */
     public static final String DOCUMENTDATE = "DOCUMENTDATE";
+
+    /**
+     * Плательщик.
+     */
+    public static final String PAYER = "PAYER";
 }
