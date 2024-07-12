@@ -6,6 +6,8 @@ import com.vpolosov.trainee.merge_xml.validators.InputDataValidation;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
 
@@ -18,6 +20,7 @@ import javax.xml.validation.Validator;
 import java.io.File;
 import java.util.List;
 
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @Component
 @RequiredArgsConstructor
 public class XmlValidator implements InputDataValidation {
@@ -37,7 +40,6 @@ public class XmlValidator implements InputDataValidation {
     @SneakyThrows
     public void verify(List<File> xmlFiles, List<File> xsdFiles) {
         Validator validator = initValidator(xsdFiles.get(0));
-
         for (File xml : xmlFiles) {
             try {
                 validator.validate(new StreamSource(xml));
