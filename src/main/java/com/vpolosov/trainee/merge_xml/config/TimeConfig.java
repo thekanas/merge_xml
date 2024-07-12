@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.Clock;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Конфигурация времени.
@@ -12,6 +13,16 @@ import java.time.Clock;
  */
 @Configuration
 public class TimeConfig {
+
+    /**
+     * Создаёт бин для формата даты.
+     *
+     * @return возвращает парсер для даты.
+     */
+    @Bean
+    public DateTimeFormatter localDateFormat() {
+        return DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    }
 
     /**
      * Создаёт бин определяющий Часы, обеспечивающие доступ к текущему моменту,
