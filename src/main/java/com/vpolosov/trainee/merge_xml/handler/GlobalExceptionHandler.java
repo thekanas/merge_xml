@@ -18,7 +18,9 @@ public class GlobalExceptionHandler {
         DuplicationProcessingException.class,
         IncorrectMinAmountException.class,
         NonExistentTagException.class,
-        IncorrectDateException.class})
+        IncorrectDateException.class,
+        DifferentPayerException.class
+    })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponseDTO handleIllegalArgumentException(Exception e) {
         return new ErrorResponseDTO("Bad Request", e.getMessage());

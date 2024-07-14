@@ -24,13 +24,13 @@
             <PAYGRNDPARAM>0</PAYGRNDPARAM>
             <PAYTYPEPARAM/>
             <PAYUNTIL/>
-            <PAYER>ООО "Иррико-Холдинг"</PAYER>
-            <PAYERACCOUNT>40702810000090001443</PAYERACCOUNT>
-            <PAYERBIC>040702788</PAYERBIC>
-            <PAYERBANKNAME>ФИЛИАЛ БАНКА ВТБ (ПАО) В Г. СТАВРОПОЛЕ, г. Ставрополь</PAYERBANKNAME>
+            <PAYER>ООО "САРРАС"</PAYER>
+            <PAYERACCOUNT>40702810501550000110</PAYERACCOUNT>
+            <PAYERBIC>044525411</PAYERBIC>
+            <PAYERBANKNAME>Филиал "Центральный" Банка ВТБ (ПАО), г. Москва</PAYERBANKNAME>
             <PAYERBANKTYPE/>
-            <PAYERCORRACCOUNT>30101810100000000788</PAYERCORRACCOUNT>
-            <PAYERINN>7703781110</PAYERINN>
+            <PAYERCORRACCOUNT>30101810145250000411</PAYERCORRACCOUNT>
+            <PAYERINN>5001087596</PAYERINN>
             <PAYERKPP>876543210</PAYERKPP>
             <PAYERPLACE/>
             <PAYERPLACETYPE/>
