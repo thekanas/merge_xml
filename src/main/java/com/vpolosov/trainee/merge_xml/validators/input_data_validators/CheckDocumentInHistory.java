@@ -5,6 +5,7 @@ import com.vpolosov.trainee.merge_xml.handler.exception.InvalidCurrencyCodeValue
 import com.vpolosov.trainee.merge_xml.model.History;
 import com.vpolosov.trainee.merge_xml.service.HistoryService;
 import com.vpolosov.trainee.merge_xml.service.specification.HistorySpecifications;
+import com.vpolosov.trainee.merge_xml.utils.DocumentUtil;
 import com.vpolosov.trainee.merge_xml.validators.InputDataValidation;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -25,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.vpolosov.trainee.merge_xml.utils.XmlTags.DOCREF;
+
 @Component
 @RequiredArgsConstructor
 public class CheckDocumentInHistory implements InputDataValidation {
@@ -34,6 +37,7 @@ public class CheckDocumentInHistory implements InputDataValidation {
     private static final String DOCREF_TAG = "DOCREF";
     private static final String CURRCODE_TAG = "CURRCODE";
     private static final String VALID_CURRCODE = "810";
+    private final DocumentUtil documentUtil;
 
     @SneakyThrows
     public void verify(List<File> xmlFiles, List<File> xsdFiles) {
@@ -49,7 +53,7 @@ public class CheckDocumentInHistory implements InputDataValidation {
     }
 
     private Map<String, String> getLoadDateToBDFromHistory(List<File> xmlFiles) throws IOException, SAXException, ParserConfigurationException {
-        DocumentBuilder documentBuilder = DocumentBuilderFactory.newDefaultInstance().newDocumentBuilder();
+        DocumentBuilder documentBuilder = DocumentBuilderFactory.newDefaultInstance().newDocumentBuilder(); //заменить
         Map<String, String> docRefsAndFileNames = new HashMap<>();
         Specification<History> spec = Specification.where(null);
         for (File xmlFile : xmlFiles) {
@@ -62,7 +66,8 @@ public class CheckDocumentInHistory implements InputDataValidation {
             }
 
             NodeList elementsByTagName = document.getElementsByTagName(DOCREF_TAG);
-            String docRef = elementsByTagName.item(0).getTextContent();
+//            String docRef = elementsByTagName.item(0).getTextContent();
+            String docRef = documentUtil.getFirstElementByTagName(xmlFile, DOCREF);
             docRefsAndFileNames.put(docRef, xmlFile.getName());
             spec = spec.or(HistorySpecifications.docRefEquals(docRef));
         }

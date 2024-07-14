@@ -9,13 +9,14 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.vpolosov.trainee</groupId>
-    <artifactId>merge_xml</artifactId>
+    <artifactId>merge-xml</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>merge_xml</name>
     <description>merge_xml</description>
     <properties>
         <java.version>17</java.version>
         <testcontainers.version>1.19.3</testcontainers.version>
+        <springdo-openapi-starter-webmvc-ui.version>2.2.0</springdo-openapi-starter-webmvc-ui.version>
     </properties>
     <dependencies>
         <dependency>
@@ -29,12 +30,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>3.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.7.3</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -44,7 +43,6 @@
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>1.9.20</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -53,13 +51,11 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.2.0</version>
+            <version>${springdo-openapi-starter-webmvc-ui.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-core -->
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>4.28.0</version>
         </dependency>
 
         <!--Testcontainers-->

@@ -2,10 +2,10 @@ package com.vpolosov.trainee.merge_xml.service;
 
 import com.vpolosov.trainee.merge_xml.model.History;
 import com.vpolosov.trainee.merge_xml.repository.HistoryRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -20,10 +20,12 @@ public class HistoryService {
 
     private final HistoryRepository historyRepository;
 
+    @Transactional(readOnly = true)
     public List<History> getHistoryListBySpec(Specification<History> spec) {
         return historyRepository.findAll(spec);
     }
 
+    @Transactional
     public void addHistory(History history) {
         historyRepository.save(history);
     }
