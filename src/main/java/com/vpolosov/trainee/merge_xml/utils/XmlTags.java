@@ -13,6 +13,11 @@ public class XmlTags {
     public static final String DOCREF = "DOCREF";
 
     /**
+     * Код валюты.
+     */
+    public static final String CURRCODE = "CURRCODE";
+
+    /**
      * Сумма платежа.
      */
     public static final String AMOUNT = "AMOUNT";
