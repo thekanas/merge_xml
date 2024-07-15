@@ -19,7 +19,8 @@ public class GlobalExceptionHandler {
         IncorrectMinAmountException.class,
         NonExistentTagException.class,
         IncorrectDateException.class,
-        DifferentPayerException.class
+        DifferentPayerException.class,
+        InvalidCurrencyCodeValueException.class
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponseDTO handleIllegalArgumentException(Exception e) {

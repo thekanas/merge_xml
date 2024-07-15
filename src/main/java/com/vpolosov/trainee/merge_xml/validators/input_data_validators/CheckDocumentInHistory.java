@@ -12,12 +12,8 @@ import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
@@ -27,16 +23,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.vpolosov.trainee.merge_xml.utils.XmlTags.DOCREF;
+import static com.vpolosov.trainee.merge_xml.utils.XmlTags.CURRCODE;
 
 @Component
 @RequiredArgsConstructor
 public class CheckDocumentInHistory implements InputDataValidation {
 
+    public static final String VALID_CURRCODE = "810";
+
     private final HistoryService historyService;
     private final Logger loggerForDouble;
-    private static final String DOCREF_TAG = "DOCREF";
-    private static final String CURRCODE_TAG = "CURRCODE";
-    private static final String VALID_CURRCODE = "810";
     private final DocumentUtil documentUtil;
 
     @SneakyThrows
@@ -53,20 +49,15 @@ public class CheckDocumentInHistory implements InputDataValidation {
     }
 
     private Map<String, String> getLoadDateToBDFromHistory(List<File> xmlFiles) throws IOException, SAXException, ParserConfigurationException {
-        DocumentBuilder documentBuilder = DocumentBuilderFactory.newDefaultInstance().newDocumentBuilder(); //заменить
         Map<String, String> docRefsAndFileNames = new HashMap<>();
         Specification<History> spec = Specification.where(null);
         for (File xmlFile : xmlFiles) {
-            Document document = documentBuilder.parse(xmlFile);
 
-            NodeList nodeListWithCurrCode = document.getElementsByTagName(CURRCODE_TAG);
-            String currCode = nodeListWithCurrCode.item(0).getTextContent();
+            String currCode = documentUtil.getFirstElementByTagName(xmlFile, CURRCODE);
             if (!currCode.equals(VALID_CURRCODE)) {
                 throw new InvalidCurrencyCodeValueException("Допустимое значение кода валюты " + VALID_CURRCODE);
             }
 
-            NodeList elementsByTagName = document.getElementsByTagName(DOCREF_TAG);
-//            String docRef = elementsByTagName.item(0).getTextContent();
             String docRef = documentUtil.getFirstElementByTagName(xmlFile, DOCREF);
             docRefsAndFileNames.put(docRef, xmlFile.getName());
             spec = spec.or(HistorySpecifications.docRefEquals(docRef));
