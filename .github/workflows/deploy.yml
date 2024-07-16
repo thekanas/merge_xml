@@ -1,0 +1,45 @@
+name: Deploy Javadoc
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+env:
+  MAVEN_OPTS: >-
+    -Djava.awt.headless=true
+    -Dhttps.protocols=TLSv1.2
+    -DlastModGranularityMs=3600000
+    -Dmaven.repo.local=.m2/repository
+    -Dorg.slf4j.simpleLogger.showDateTime=true
+  MAVEN_CLI_ARGS: >-
+    --batch-mode
+    --errors
+    --fail-at-end
+    --show-version
+    --no-transfer-progress
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        name: Check out code
+      - name: Setup Maven Action
+        uses: s4u/setup-maven-action@v1.11.0
+        with:
+          java-version: 17
+      - name: Deploy JavaDoc 🚀
+        uses: MathieuSoysal/Javadoc-publisher.yml@v2.5.0
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          deploy-mode: artifact
+          java-version: 17
+          project: maven # or gradle
+          custom-command: mvn $MAVEN_CLI_ARGS javadoc:javadoc
+          javadoc-source-folder: target/site/apidocs
