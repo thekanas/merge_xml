@@ -34,11 +34,12 @@ jobs:
           java-version: 17
       - name: Run Checkstyle
         run: mvn $MAVEN_CLI_ARGS checkstyle:check
-      - name: Push Checkstyle report
-        uses: jwgmeligmeyling/checkstyle-github-action@v1.2
-        if: success() || failure() # run this step even if previous step failed
+      - name: Publish Checkstyle report
+        uses: Juuxel/publish-checkstyle-report@v1
+        if: ${{ failure() }}
         with:
-          path: 'target/checkstyle-result.xml'
+          reports: |
+            target/checkstyle-result.xml
 
   build:
     needs: checkstyle
