@@ -6,6 +6,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 env:
   MAVEN_OPTS: >-
     -Djava.awt.headless=true
@@ -24,7 +28,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       pages: write
       id-token: write
     steps:
@@ -40,6 +44,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           deploy-mode: artifact
           java-version: 17
-          project: maven # or gradle
+          project: maven
           custom-command: mvn $MAVEN_CLI_ARGS javadoc:javadoc
-          javadoc-source-folder: target/site/apidocs
