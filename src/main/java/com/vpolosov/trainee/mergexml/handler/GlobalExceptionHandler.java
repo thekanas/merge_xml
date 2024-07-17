@@ -6,6 +6,7 @@ import com.vpolosov.trainee.mergexml.handler.exception.DuplicationProcessingExce
 import com.vpolosov.trainee.mergexml.handler.exception.IncorrectDateException;
 import com.vpolosov.trainee.mergexml.handler.exception.IncorrectMinAmountException;
 import com.vpolosov.trainee.mergexml.handler.exception.IncorrectXmlFileException;
+import com.vpolosov.trainee.mergexml.handler.exception.InvalidCurrencyCodeValueException;
 import com.vpolosov.trainee.mergexml.handler.exception.MoreFiveHundredKbException;
 import com.vpolosov.trainee.mergexml.handler.exception.NonExistentTagException;
 import com.vpolosov.trainee.mergexml.handler.exception.NotExactlyOneXsdFileException;
@@ -41,7 +42,8 @@ public class GlobalExceptionHandler {
         IncorrectMinAmountException.class,
         NonExistentTagException.class,
         IncorrectDateException.class,
-        DifferentPayerException.class
+        DifferentPayerException.class,
+        InvalidCurrencyCodeValueException.class
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponseDTO handleIllegalArgumentException(Exception e) {

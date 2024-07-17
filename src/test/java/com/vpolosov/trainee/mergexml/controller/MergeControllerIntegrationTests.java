@@ -28,8 +28,7 @@ public class MergeControllerIntegrationTests {
     private MockMvc mockMvc;
 
     private static Path getFixturesPath() {
-        return Paths.get("src", "test", "java",
-                "com", "vpolosov", "trainee", "merge_xml", "test_fixtures", "sourceXml", "InvalidCurrCode")
+        return Paths.get("src/test/resources/test_fixtures/sourceXml/InvalidCurrCode")
             .toAbsolutePath().normalize();
     }
 
