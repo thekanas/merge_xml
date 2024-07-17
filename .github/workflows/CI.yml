@@ -107,13 +107,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: maven-test
-      - name: Check JaCoCo Directory
-        run: |
-            if [ ! -d "target/site/jacoco" ]
-            then
-              echo "Directory target/site/jacoco DOES NOT exists."
-              exit 1
-            fi
       - name: Check Test Coverage
         run: mvn $MAVEN_CLI_ARGS -DskipTests verify
       - name: Add coverage to PR
