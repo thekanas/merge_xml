@@ -53,12 +53,12 @@ jobs:
         with:
           java-version: 17
       - name: Run Package
-        run: mvn $MAVEN_CLI_ARGS -Dmaven.test.skip.exec package
+        run: mvn $MAVEN_CLI_ARGS -DskipTests package
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: maven-build
-          path: target/
+          path: ${{ github.workspace }}/**/target/**
           retention-days: 1
 
   test:
@@ -82,7 +82,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: maven-test
-          path: target/
+          path: ${{ github.workspace }}/**/target/**
           retention-days: 1
       - name: Test Report
         uses: dorny/test-reporter@v1
