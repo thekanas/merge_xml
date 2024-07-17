@@ -115,14 +115,15 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>jacoco-report</id>
+                        <id>report</id>
                         <phase>test</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
                     </execution>
                     <execution>
-                        <id>jacoco-check</id>
+                        <id>coverage-check</id>
+                        <phase>verify</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>
