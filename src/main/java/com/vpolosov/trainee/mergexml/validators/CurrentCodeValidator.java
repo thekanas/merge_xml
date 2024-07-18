@@ -48,6 +48,6 @@ public class CurrentCodeValidator implements Predicate<File> {
         if (!currCode.equals(VALID_CURRCODE)) {
             throw new InvalidCurrencyCodeValueException("Допустимое значение кода валюты " + VALID_CURRCODE);
         }
-        return false;
+        return true;
     }
 }

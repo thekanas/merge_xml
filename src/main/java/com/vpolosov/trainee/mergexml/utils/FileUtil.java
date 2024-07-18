@@ -21,7 +21,7 @@ import static com.vpolosov.trainee.mergexml.utils.Constant.FIRST_ELEMENT;
 /**
  * Вспомогательный класс для работы с файлами.
  * <p>
- * извлечения XML и XSD файлов
+ * Предоставляет функционал для извлечения XML и XSD файлов, удаление файла.
  *
  * @author Maksim Litvinenko
  */

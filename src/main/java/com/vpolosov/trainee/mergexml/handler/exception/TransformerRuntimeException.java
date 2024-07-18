@@ -3,7 +3,7 @@ package com.vpolosov.trainee.mergexml.handler.exception;
 import javax.xml.transform.TransformerException;
 
 /**
- * Выбрасывает исключение в процессе преобразования.
+ * Исключение выбрасываемое в процессе преобразования.
  *
  * @author Maksim Litvinenko
  * @see TransformerException

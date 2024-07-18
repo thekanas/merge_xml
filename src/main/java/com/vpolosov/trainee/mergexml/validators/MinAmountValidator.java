@@ -58,6 +58,6 @@ public class MinAmountValidator implements Predicate<File> {
                 "В файле %s сумма платежа не соответствует минимальной".formatted(xmlFile.getName())
             );
         }
-        return false;
+        return true;
     }
 }
