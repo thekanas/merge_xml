@@ -1,0 +1,392 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<!--
+    Документация плагина https://checkstyle.sourceforge.io/checks.html
+    Там же находится документация по всем используемым модулям, с примерами
+-->
+
+<module name="Checker">
+    <module name="TreeWalker">
+
+        <!-- Annotations -->
+        <!-- Запрещены пустые скобки: @Deprecated() -->
+        <!-- Запрещен не компактный вариант массивов: @Annotation(array = {"array_value"}) -->
+        <module name="AnnotationUseStyle"/>
+
+        <!-- Запрещена аннотация @Deprecated если в JavaDoc не указан тег @deprecated и наоборот -->
+        <!-- Срабатывает при нарушении правил HTML в JavaDoc -->
+        <module name="MissingDeprecated"/>
+
+        <!-- Block Checks -->
+        <!-- Запрещены вложенные блоки {}. Не касается блоков на уровне класса и case: {} -->
+        <module name="AvoidNestedBlocks">
+            <property name="allowInSwitchCase" value="true"/>
+        </module>
+
+        <!-- Запрещены пустые блоки {} у if, for, while, try и т.д. -->
+        <!--Должен быть либо код, либо комментарий -->
+        <module name="EmptyBlock">
+            <property name="option" value="text"/>
+        </module>
+
+        <!-- Запрещен пустой блок у catch -->
+        <!--Должен быть либо код, либо комментарий -->
+        <module name="EmptyCatchBlock"/>
+
+        <!-- Запрещено использование '{' на новой строке -->
+        <module name="LeftCurly"/>
+
+        <!-- Фигурная скобка '}' должна быть одна в строке -->
+        <!-- Многоблочные операторы должны быть вида '} else {', '} catch (..) {' -->
+        <module name="RightCurly"/>
+
+        <!-- Запрещено отсутствие скобок для блоков кода -->
+        <!-- Например, запрещено: if (i < 0) i = 0; -->
+        <module name="NeedBraces"/>
+
+        <!-- Class Design -->
+        <!-- Все вложенные классы должны быть в нижней части top-level класса -->
+        <module name="InnerTypeLast"/>
+
+        <!-- Запрещены интерфейсы без методов, за исключением маркерных интерфейсов -->
+        <module name="InterfaceIsType"/>
+
+        <!-- Классы исключение должны содержать только либо private, либо final поля -->
+        <module name="MutableException"/>
+
+        <!-- Coding -->
+        <!-- Запрещен вызов super() без параметров в конструкторах -->
+        <module name="AvoidNoArgumentSuperConstructorCall"/>
+
+        <!-- Задан порядок элементов класса по конвенции с игнорированием модификаторов доступа -->
+        <!-- https://checkstyle.sourceforge.io/styleguides/sun-code-conventions-19990420/CodeConventions.doc2.html#a1852 -->
+        <module name="DeclarationOrder">
+            <property name="ignoreModifiers" value="true"/>
+        </module>
+
+        <!-- Запрещены пустые операторы ';' -->
+        <module name="EmptyStatement"/>
+
+        <!-- equals и hashCode должны переопределяться парой -->
+        <module name="EqualsHashCode"/>
+
+        <!-- Запрещено затенение переменных -->
+        <!-- Например, когда название локальной переменной совпадает с названием переменной класса -->
+        <!-- Разрешено затенение параметрами -->
+        <module name="HiddenField">
+            <property name="tokens" value="VARIABLE_DEF, PATTERN_VARIABLE_DEF, LAMBDA, RECORD_COMPONENT_DEF"/>
+        </module>
+
+        <!-- Запрещены магические числа -->
+        <!-- Число должно быть вынесено в static final поле -->
+        <!-- Магические числа разрешены в методе hashCode -->
+        <module name="MagicNumber">
+            <property name="ignoreHashCodeMethod" value="true"/>
+            <property name="ignoreNumbers" value=""/>
+        </module>
+
+        <!-- Запрещено объявление переменных в одном операторе -->
+        <!-- Например, запрещено: int x, y; -->
+        <module name="MultipleVariableDeclarations"/>
+
+        <!-- Запрещена запятая после последнего элемента массива -->
+        <module name="NoArrayTrailingComma"/>
+
+        <!-- Запрещена запятая после последнего элемента enum -->
+        <module name="NoEnumTrailingComma"/>
+
+        <!-- Запрещено несколько операторов в строке -->
+        <module name="OneStatementPerLine"/>
+
+        <!-- Запрещено разделять перегруженные методы другими методами -->
+        <module name="OverloadMethodsDeclarationOrder"/>
+
+        <!-- Запрещены классы без пакетов -->
+        <!-- Запрещены классы с пакетом, который не соответствует каталогу -->
+        <module name="PackageDeclaration"/>
+
+        <!-- Упрощение boolean return -->
+        <!-- Например, запрещено: if (a) { return false; } else { return true; }-->
+        <!-- Вместо этого: return !a; -->
+        <module name="SimplifyBooleanReturn"/>
+
+        <!-- Запрещено сравнение String через == -->
+        <module name="StringLiteralEquality"/>
+
+        <!-- Запрещены избыточные круглые скобки в выражениях -->
+        <!-- Например, запрещено: if ((++f) > g && (a > b)) {} -->
+        <module name="UnnecessaryParentheses"/>
+
+        <!-- Запрещены необязательные точки с запятой после классов, интерфейсов и тп. -->
+        <!-- Например, запрещено: public class SomeClass { }; -->
+        <module name="UnnecessarySemicolonAfterOuterTypeDeclaration"/>
+
+        <!-- Запрещены необязательные точки с запятой после элементов класса (методы, блоки {} и т.д.) -->
+        <module name="UnnecessarySemicolonAfterTypeMemberDeclaration"/>
+
+        <!-- Запрещены необязательные точки с запятой после перечисления enum, если нет других членов класса -->
+        <module name="UnnecessarySemicolonInEnumeration"/>
+
+        <!-- Запрещены необязательные точки с запятой после ресурса в try-with-resources -->
+        <module name="UnnecessarySemicolonInTryWithResources"/>
+
+        <!-- Запрещены неиспользуемые локальные переменные -->
+        <module name="UnusedLocalVariable"/>
+
+        <!-- Imports -->
+        <!-- Запрещены '.*' в import (в том числе в import static) -->
+        <module name="AvoidStarImport"/>
+
+        <!-- Запрещены избыточные импорты, например java.lang.String -->
+        <module name="RedundantImport"/>
+
+        <!-- Запрещены неиспользуемые импорты, за исключением импортов для документации -->
+        <module name="UnusedImports"/>
+
+        <!-- JavaDoc -->
+
+        <!-- Определен порядок тегов -->
+        <!--
+            Some javadoc.
+
+            @author Some javadoc.
+            @version Some javadoc.
+            @param Some javadoc.
+            @return Some javadoc.
+            @throws Some javadoc.
+            @exception Some javadoc.
+            @see Some javadoc.
+            @since Some javadoc.
+            @serial Some javadoc.
+            @serialField
+            @serialData
+        -->
+        <!-- https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html#CHDBEFIF -->
+        <module name="AtclauseOrder"/>
+
+        <!-- Запрещено расположение JavaDoc в неположенном месте -->
+        <module name="InvalidJavadocPosition"/>
+
+        <!-- Проверяет отсутствие комментариев Javadoc в файлах package-info.java -->
+        <module name="MissingJavadocPackage"/>
+
+        <!-- Все содержимые JavaDoc должны начинаться с одного и того же места (со второй строки) -->
+        <!-- Например, запрещено:
+            /** JavaDoc к классу.
+              * Подробности.
+              */
+        -->
+        <module name="JavadocContentLocation"/>
+
+        <!-- Проверка содержимого JavaDoc для методов и конструкторов -->
+        <!-- Обязательные теги @param и @return -->
+        <!-- Также если метод бросает исключение (в том числе RuntimeException) то обязателен тег @throws -->
+        <module name="JavadocMethod">
+            <property name="validateThrows" value="true"/>
+        </module>
+
+        <!-- Запрещено начинать строку в JavaDoc не со звездочки -->
+        <module name="JavadocMissingLeadingAsterisk"/>
+
+        <!-- После ведущей звездочки в JavaDoc должен быть пробел -->
+        <module name="JavadocMissingWhitespaceAfterAsterisk"/>
+
+        <!-- Определен стиль для JavaDoc -->
+        <!-- Предложение должно заканчиваться точкой -->
+        <!-- Запрещено пустое описание документации -->
+        <module name="JavadocStyle">
+            <property name="checkEmptyJavadoc" value="true"/>
+        </module>
+
+        <!-- Проверка содержимого JavaDoc для классов -->
+        <!-- Запрещены неизвестные теги -->
+        <!-- Классы с аннотацией Generated игнорируются -->
+        <module name="JavadocType"/>
+
+        <!-- Проверка содержимого JavaDoc для переменных -->
+        <!-- Игнорируется serialVersionUID -->
+        <module name="JavadocVariable"/>
+
+        <!-- Запрещено отсутствие документации для всех методов и конструкторов -->
+        <!-- Разрешено не указывать JavaDoc для getters и setters -->
+        <!-- Разрешено не указывать JavaDoc для методов аннотированных @Override -->
+        <module name="MissingJavadocMethod">
+            <property name="scope" value="private"/>
+            <property name="allowMissingPropertyJavadoc" value="true"/>
+        </module>
+
+        <!-- Запрещено отсутствие документации для всех классов -->
+        <!-- Разрешено не указывать JavaDoc для классов аннотированных @Generated -->
+        <module name="MissingJavadocType">
+            <property name="scope" value="private"/>
+        </module>
+
+        <!-- Запрещено указывать теги @throws @params и другие без описания -->
+        <module name="NonEmptyAtclauseDescription"/>
+
+        <!-- После описания в JavaDoc перед тегами должна быть пустая строка -->
+        <module name="RequireEmptyLineBeforeBlockTagGroup"/>
+
+        <!-- Запрещена JavaDoc для класса без тега @author -->
+        <module name="WriteTag">
+            <property name="tag" value="@author"/>
+        </module>
+
+
+        <!-- Miscellaneous -->
+
+        <!-- Задает стиль массивов Java: String[] args, а не C-стиль: String args[] -->
+        <module name="ArrayTypeStyle"/>
+
+        <!-- Задает отступы в 4 пробела -->
+        <module name="Indentation"/>
+
+        <!-- Запрещены файлы без кода, лишь с комментариями или пустые -->
+        <module name="NoCodeInFile"/>
+
+        <!-- Проверяет что название класса соответствует названию файла -->
+        <module name="OuterTypeFilename"/>
+
+        <!-- Запрещены методы main, кроме классов, название которых заканчивается на Application -->
+        <module name="UncommentedMain">
+            <property name="excludedClasses" value="\.*Application$"/>
+        </module>
+
+        <!-- Запрещено для определения long литерала использовать 'l'-->
+        <!-- Используйте 'L' по спецификации Java -->
+        <module name="UpperEll"/>
+
+        <!-- Modifiers -->
+
+        <!-- Запрещены избыточные модификаторы доступа -->
+        <module name="RedundantModifier"/>
+
+        <!-- Naming Conventions -->
+
+        <!-- Определено использование camelCase -->
+        <!-- static final игнорируются -->
+        <!-- Разрешено использование не более трех заглавных букв подряд -->
+        <module name="AbbreviationAsWordInName">
+            <property name="ignoreFinal" value="false"/>
+            <property name="ignoreStatic" value="false"/>
+        </module>
+
+        <!-- Ограничение на название переменных в catch блоках -->
+        <!-- По шаблону: ^(e|t|ex|[a-z][a-z][a-zA-Z]+)$ -->
+        <module name="CatchParameterName"/>
+
+        <!-- Ограничение на название дженериков в классах -->
+        <!-- По шаблону: ^[A-Z]$ -->
+        <module name="ClassTypeParameterName"/>
+
+        <!-- Ограничение на название дженериков в интерфейсах -->
+        <!-- По шаблону: ^[A-Z]$ -->
+        <module name="InterfaceTypeParameterName"/>
+
+        <!-- Ограничение на название дженериков в record -->
+        <!-- По шаблону: ^[A-Z]$ -->
+        <module name="InterfaceTypeParameterName"/>
+
+        <!-- Ограничение на название дженериков в методах -->
+        <!-- По шаблону: ^[A-Z]$ -->
+        <module name="MethodTypeParameterName"/>
+
+        <!--  Ограничение на название констант static final -->
+        <!-- По шаблону: ^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$ -->
+        <module name="ConstantName"/>
+
+        <!--  Ограничение на название lambda параметров -->
+        <!-- По шаблону: ^[a-z][a-zA-Z0-9]*$ -->
+        <module name="LambdaParameterName"/>
+
+        <!--  Ограничение на название local final переменных -->
+        <!-- По шаблону: ^[a-z][a-zA-Z0-9]*$ -->
+        <module name="LocalFinalVariableName"/>
+
+        <!--  Ограничение на название local final переменных -->
+        <!-- По шаблону: ^[a-z][a-zA-Z0-9]*$ -->
+        <module name="LocalVariableName"/>
+
+        <!--  Ограничение на название свойств класса -->
+        <!-- По шаблону: ^[a-z][a-zA-Z0-9]*$ -->
+        <module name="MemberName"/>
+
+        <!--  Ограничение на название методов -->
+        <!-- По шаблону: ^[a-z][a-zA-Z0-9]*$ -->
+        <module name="MethodName"/>
+
+        <!--  Ограничение на название параметров -->
+        <!-- По шаблону: ^[a-z][a-zA-Z0-9]*$ -->
+        <module name="ParameterName"/>
+
+        <!--  Ограничение на название переменной шаблона -->
+        <!-- if (o1 instanceof String str) {} -->
+        <!-- По шаблону: ^[a-z][a-zA-Z0-9]*$ -->
+        <module name="PatternVariableName"/>
+
+        <!--  Ограничение на название переменной record -->
+        <!-- По шаблону: ^[a-z][a-zA-Z0-9]*$ -->
+        <module name="RecordComponentName"/>
+
+        <!--  Ограничение на название статических переменных -->
+        <!-- По шаблону: ^[a-z][a-zA-Z0-9]*$ -->
+        <module name="StaticVariableName"/>
+
+        <!--  Ограничение на название типов -->
+        <!-- По шаблону: ^[A-Z][a-zA-Z0-9]*$ -->
+        <module name="TypeName"/>
+
+        <!--  Ограничение на название пакетов -->
+        <!-- По шаблону: ^[a-z]+([\.a-z])*$ -->
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+([\.a-z])*$"/>
+        </module>
+
+        <!-- Ограничение использования пробелов с diamond <> -->
+        <!-- Например, запрещено: List a = new ArrayList<> (); -->
+        <module name="GenericWhitespace"/>
+
+        <!-- Ограничение на использование круглы скобок метода -->
+        <!-- Например, запрещено ставить пробел перед '(':  public void method () {} -->
+        <module name="MethodParamPad"/>
+
+        <!-- Запрещены пробелы перед и после '.', '!' и т.д. -->
+        <module name="NoWhitespaceAfter"/>
+        <module name="NoWhitespaceBefore"/>
+
+        <!-- Перенос операторов должен быть следующий (плюс с новой строки) -->
+        <!--
+            int d = c
+                + 10;
+        -->
+        <!-- Аналогично &&, ||, == и т.д. -->
+        <module name="OperatorWrap"/>
+
+        <!-- Запрещены пробелы у скобок: ( a, b ) -->
+        <module name="ParenPad"/>
+
+        <!-- Ограничение на дублирующиеся пробелы, разрешен один пробел подряд -->
+        <module name="SingleSpaceSeparator"/>
+
+        <!-- Запрещены пробелы в type cast: int a = ( int) b; -->
+        <module name="TypecastParenPad"/>
+    </module>
+
+    <!-- Ограничение длины строки в .java и .kt файлах -->
+    <!-- Игнорируется package и import -->
+    <module name="LineLength">
+        <property name="fileExtensions" value="java, kt" />
+        <property name="max" value="120" />
+    </module>
+
+    <!-- Запрещено использование символов табуляции в .java и .kt файлах -->
+    <module name="FileTabCharacter">
+        <property name="fileExtensions" value="java, kt" />
+    </module>
+
+    <!-- Проверяет, что каждый пакет Java имеет файл package-info.java, используемый для комментариев. -->
+    <module name="JavadocPackage"/>
+</module>

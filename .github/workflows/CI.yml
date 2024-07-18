@@ -1,0 +1,119 @@
+name: Maven CI
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+env:
+  MAVEN_OPTS: >-
+    -Djava.awt.headless=true
+    -Dhttps.protocols=TLSv1.2
+    -DlastModGranularityMs=3600000
+    -Dmaven.repo.local=.m2/repository
+    -Dorg.slf4j.simpleLogger.showDateTime=true
+  MAVEN_CLI_ARGS: >-
+    --batch-mode
+    --errors
+    --fail-at-end
+    --show-version
+    --no-transfer-progress
+
+permissions:
+  checks: write
+  pull-requests: write
+
+jobs:
+  checkstyle:
+    name: Maven Checkstyle
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        name: Check out code
+      - name: Setup Maven Action
+        uses: s4u/setup-maven-action@v1.11.0
+        with:
+          java-version: 17
+      - name: Run Checkstyle
+        run: mvn $MAVEN_CLI_ARGS checkstyle:check
+      - name: Publish Checkstyle report
+        uses: Juuxel/publish-checkstyle-report@v1
+        if: ${{ failure() }}
+        with:
+          reports: |
+            target/checkstyle-result.xml
+
+  build:
+    needs: checkstyle
+    name: Maven Package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        name: Check out code
+      - name: Setup Maven Action
+        uses: s4u/setup-maven-action@v1.11.0
+        with:
+          java-version: 17
+      - name: Run Package
+        run: mvn $MAVEN_CLI_ARGS -DskipTests package
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: maven-build
+          path: ${{ github.workspace }}/**/target/**
+          retention-days: 1
+
+  test:
+    needs: build
+    name: Maven Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        name: Check out code
+      - name: Setup Maven Action
+        uses: s4u/setup-maven-action@v1.11.0
+        with:
+          java-version: 17
+      - name: Download a build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: maven-build
+      - name: Run Test
+        run: mvn $MAVEN_CLI_ARGS test
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: maven-test
+          path: ${{ github.workspace }}/**/target/**
+          retention-days: 1
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure() # run this step even if previous step failed
+        with:
+          name: Java Tests
+          path: target/surefire-reports/*.xml
+          reporter: java-junit
+
+  coverage:
+    needs: test
+    name: JaCoCo Test Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        name: Check out code
+      - name: Setup Maven Action
+        uses: s4u/setup-maven-action@v1.11.0
+        with:
+          java-version: 17
+      - name: Download a test artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: maven-test
+      - name: Check Test Coverage
+        run: mvn $MAVEN_CLI_ARGS -DskipTests verify
+      - name: Add coverage to PR
+        id: jacoco
+        uses: madrapps/jacoco-report@v1.6.1
+        if: success() || failure()
+        with:
+          paths: ${{ github.workspace }}/**/target/site/jacoco/jacoco.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 80
