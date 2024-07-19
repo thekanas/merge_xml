@@ -1,18 +1,18 @@
 package com.vpolosov.trainee.mergexml.handler.exception;
 
 /**
- * Исключение выбрасываемое при отсутствии тега.
+ * Исключение выбрасываемое при невалидном значении тега.
  *
  * @author Andrei Stalybka
  */
-public class NonExistentTagException extends RuntimeException {
+public class IncorrectValueException extends RuntimeException {
 
     /**
      * Конструктор с одним параметром.
      *
      * @param message текст ошибки.
      */
-    public NonExistentTagException(String message) {
+    public IncorrectValueException(String message) {
         super(message);
     }
 }

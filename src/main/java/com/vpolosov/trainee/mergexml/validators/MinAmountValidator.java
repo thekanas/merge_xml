@@ -2,7 +2,7 @@ package com.vpolosov.trainee.mergexml.validators;
 
 import com.vpolosov.trainee.mergexml.aspect.Loggable;
 import com.vpolosov.trainee.mergexml.handler.exception.IncorrectMinAmountException;
-import com.vpolosov.trainee.mergexml.handler.exception.NonExistentTagException;
+import com.vpolosov.trainee.mergexml.handler.exception.IncorrectValueException;
 import com.vpolosov.trainee.mergexml.utils.DocumentUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -37,7 +37,7 @@ public class MinAmountValidator implements Predicate<File> {
     /**
      * {@inheritDoc}
      *
-     * @throws NonExistentTagException     если в файле не найдена сумма платежа или она некорректна.
+     * @throws IncorrectValueException     если в файле не найдена сумма платежа или она некорректна.
      * @throws IncorrectMinAmountException если сумма платежа меньше минимально допустимой
      *                                     {@link MinAmountValidator#MIN_AMOUNT}.
      */
@@ -49,7 +49,7 @@ public class MinAmountValidator implements Predicate<File> {
         try {
             amount = new BigDecimal(amountStr);
         } catch (Exception e) {
-            throw new NonExistentTagException(
+            throw new IncorrectValueException(
                 "В файле %s не найдена сумма платежа или сумма некорректна".formatted(xmlFile.getName())
             );
         }

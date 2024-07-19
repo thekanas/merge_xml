@@ -8,7 +8,7 @@ import com.vpolosov.trainee.mergexml.handler.exception.IncorrectMinAmountExcepti
 import com.vpolosov.trainee.mergexml.handler.exception.IncorrectXmlFileException;
 import com.vpolosov.trainee.mergexml.handler.exception.InvalidCurrencyCodeValueException;
 import com.vpolosov.trainee.mergexml.handler.exception.MoreFiveHundredKbException;
-import com.vpolosov.trainee.mergexml.handler.exception.NonExistentTagException;
+import com.vpolosov.trainee.mergexml.handler.exception.IncorrectValueException;
 import com.vpolosov.trainee.mergexml.handler.exception.NotExactlyOneXsdFileException;
 import com.vpolosov.trainee.mergexml.handler.exception.NotExactlyTenFilesException;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
         NotExactlyTenFilesException.class,
         DuplicationProcessingException.class,
         IncorrectMinAmountException.class,
-        NonExistentTagException.class,
+        IncorrectValueException.class,
         IncorrectDateException.class,
         DifferentPayerException.class,
         InvalidCurrencyCodeValueException.class
